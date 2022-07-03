@@ -27,7 +27,7 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['https://socialfront50.herokuapp.com/', 'localhost']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://socialfront50.herokuapp.com/*',]
 # Application definition
 
 INSTALLED_APPS = [
