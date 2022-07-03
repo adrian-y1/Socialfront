@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SOCIALFRONT_DJANGO_S_K')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://socialfront50.herokuapp.com/']
+ALLOWED_HOSTS = ['https://socialfront50.herokuapp.com/', 'localhost']
 
 
 # Application definition
