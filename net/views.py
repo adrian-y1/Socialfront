@@ -15,10 +15,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 class PostForm(forms.Form):
-    description = forms.CharField(label='', widget=forms.Textarea(attrs={f'placeholder': "What's on your mind?", 'class': 'index-textarea'}))
+    description = forms.CharField(label='', max_length=200, widget=forms.Textarea(attrs={f'placeholder': "What's on your mind?", 'class': 'index-textarea'}))
 
 class CommentForm(forms.Form):
-    comment = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Post a comment here...', 'class': 'post-comment-textarea', 'autofocus': 'autofocus'}))
+    comment = forms.CharField(label='', max_length=200, widget=forms.Textarea(attrs={'placeholder': 'Post a comment here...', 'class': 'post-comment-textarea', 'autofocus': 'autofocus'}))
     
 class ProfilePictureForm(forms.ModelForm):
     class Meta:
