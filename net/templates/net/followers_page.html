@@ -1,0 +1,53 @@
+{% extends 'net/layout.html' %} 
+{% load static %}
+{% block title %} {{ user_instance }}'s Followers {% endblock %} 
+
+{% block body %} 
+    <div class="row followings-row">
+        <div class="col-lg-12">
+            <div class="followings-header">
+                <h3>
+                    {% if request.user == user_instance %} 
+                        My Followings
+                    {% else %} 
+                        {{ user_instance }}'s Followers
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="followings-container">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                    <input type="search" class="followers-search" placeholder="Search {{ user_instance }}'s followers... " aria-describedby="basic-addon1">
+                </div>
+                {% for follower in all_user_followers %}
+                    
+                    <div class="followers-card">
+                        <div class="followings-user">
+                            <span>
+                                <a href="{% url 'profile' follower.id %}"><img src="{{ follower.profile.picture.url }}" class="rounded-circle" alt="Profile Picture"></a>
+                                <a href="{% url 'profile' follower.id %}">{{ follower }}</a>
+                            </span>
+                            {% if follower != request.user %} 
+                            <form action="{% url 'followers_page' user_instance.id %}" method="POST">
+                                {% csrf_token %} 
+                                <input type="hidden" name="follower-id" value="{{ follower.id }}">
+                                {% if follower in request.user.followings.all %} 
+                                    <input type="submit" class="unfollow-btn" name="unfollow" value="Unfollow">
+                                {% else %}
+                                    <input type="submit" class="follow-btn" name="follow" value="Follow">
+                                {% endif %}
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <span class="d-flex justify-content-center align-items-center"><span>{{ user_instance }} does not currently have any followers.</span></span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {{ user_instance.id|json_script:'userInstance' }}
+
+    <script src="{% static 'net/js/followers_page.js' %}"></script>
+{% endblock %}

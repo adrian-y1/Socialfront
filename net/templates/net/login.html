@@ -1,0 +1,50 @@
+{% extends 'net/layout.html' %} 
+
+{% block title %} Login {% endblock %} 
+
+{% block body %} 
+
+    <div class="row login-row">
+        <div class="col-lg-12">
+            <div class="login-wrapper">
+                <div class="login-header">
+                    <h3>Login</h3>
+                    <div class="login-message-con">
+                        {% if message %}
+                            <div class="login-message">{{ message }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="login-form">
+                    <form action="{% url 'login' %}" method="POST">
+                        {% csrf_token %}
+
+                        <div class="login-input">
+                            <label for="username">Username:</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light" id="basic-addon1"><i class="bi bi-person-fill"></i></span>
+                                <input autofocus autocomplete="off" type="text" name="username" id="username" placeholder="Username" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+
+                        <div class="login-input">
+                            <label for="password">Password:</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light" id="basic-addon1"><i class="bi bi-key-fill"></i></span>
+                                <input id="password" autocomplete="off" type="password" name="password" placeholder="Password" aria-describedby="basic-addon1" required>
+                            </div>
+                        </div>
+                        <span class="forgot-pass"><a href="{% url 'reset_password' %}">Forgot your password?</a></span>
+                        <div class="login-submit">
+                            <input type="submit" class="login-submit-btn" value="Login">
+                        </div>
+                    </form>
+                </div>
+                <div class="login-footer">
+                    <span>Not a member? <a href="{% url 'register' %}">Register</a>.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,218 @@
+{% extends 'net/layout.html' %}
+{% load static %} 
+
+{% block title %} {{ post_obj.user }}'s Post {% endblock %} 
+
+{% block body %} 
+    
+    <div class="row index-row">
+        <div class="col-lg-12">
+            <div class="index-header">
+                <span>
+                    <h3>Post by {{ post_obj.user }}</h3>
+                </span>
+            </div>
+            <div class="index-post-card-container mt-4">
+                <div class="index-post-card">
+                    <div class="index-post-card-con" style="zoom: 1.1;">
+                        <img src="{{ post_obj.user.profile.picture.url }}" class="rounded-circle" alt="Profile Picture">
+                        <div class="index-post-card-user">
+                            <span class="index-post-card-top">
+                                <span>
+                                    <a href="{% url 'profile' post_obj.user.id %}">{{ post_obj.user }}</a>
+                                    <span id="index-post-date"> - {{ post_obj.date_posted }}</span>
+                                </span>
+                                <div class="index-dropdown-container">
+                                    {% if request.user == post_obj.user %}
+                                    <div class="index-dropdown-content-edit">
+                                        <button type="button" data-id="{{ post_obj.id }}" class="edit-btn" id="edit-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-pencil-fill"></i></button>
+                                        <div  class="modal fade" role="dialog" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                                <form class="modal-content" id="edit-form">
+                                                    
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                                                    </div>
+                            
+                                                    <textarea id="myTextarea" data-text="{{ post_obj.description }}" data-id="{{ post.id }}" class="form-control modal-body"></textarea>
+                                                    
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                                                        <input type="submit" data-bs-dismiss="modal" value="Save" class="btn btn-primary">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <span onclick="toggleDropdown(this)" class="index-dropdown">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </span>
+                                    <span class="index-dropdown-content">
+                                        {% if request.user == post_obj.user %}
+                                        <div class="index-dropdown-content-delete">
+                                            <form action="{% url 'post' post_obj.id %}" method="POST">
+                                                {% csrf_token %} 
+                                                <button class="delete-btn" name="post-view-delete-post" value="Delete Post"><i style="margin-right: 5px;" class="bi bi-trash-fill"></i> Delete Post</button>
+                                                <input type="hidden" name="post-view-delete_postid" value="{{ post_obj.id }}">
+                                            </form>
+                                        </div>
+                                        {% endif %}
+
+                                        {% if request.user != post_obj.user %} 
+                                            <div>
+                                                <form action="{% url 'post' post_obj.id %}" method="POST">
+                                                    {% csrf_token %} 
+                                                        <input type="hidden" name="post-view-follow-id" value="{{ post_obj.user.id }}">
+                                                    {% if post_obj.user in request.user.followings.all %} 
+                                                        <button class="index-unfollow-btn" name="post-view-unfollow" value="Unfollow" type="submit"><i style="margin-right: 5px;"  class="bi bi-person-x-fill"></i> Unfollow</button>
+                                                    {% else %}
+                                                        <button class="index-follow-btn" name="post-view-follow" value="Follow" type="submit"><i style="margin-right: 5px;"  class="bi bi-person-plus-fill"></i> Follow</button>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </span>
+                            <div class="index-post-card-description">
+                                <span id="update-desc" data-id="{{ post_obj.id }}">{{ post_obj.description }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 20px 0;" class="index-post-interaction">
+                        <div class="index-post-like">
+                            <form data-id="{{ post_obj.id }}" class="like-form" data-user_id="{{ request.user.id }}">  
+                                {% csrf_token %}
+                                {% if request.user in post_obj.likes.all %}
+                                <button type="submit" value="Unlike" class="unlike-btn">
+                                    <i style="color: rgb(218, 86, 108);" class="bi bi-heart-fill"></i>
+                                </button>
+                                
+                                {% else %}
+                                <button type="submit" value="Like" class="like-btn">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                    
+                                {% endif %}
+                            </form>
+                            <span class="like-count" data-id="{{ post_obj.id }}">{{ post_obj.likes.all|length }}</span>
+                        </div>
+                        <div class="index-post-comment">
+                            <a href="{% url 'post' post_obj.id %}"><i class="bi bi-chat"></i> {{ comments_num }}</a>
+                        </div>
+                    </div>
+                    <h5 style="font-weight: normal; font-size: 17px; color: rgb(128, 128, 128, 0.8);"> {{ comments_num }} comments</h5>
+                    <div class="post-comment-container">
+                        <div class="post-comment-form">
+                            <img src="{{ request.user.profile.picture.url }}" class="rounded-circle" alt="Profile Picture">
+                            <form action="{% url 'post' post_obj.id %}" method="POST">
+                                {% csrf_token %}
+                                {{ comment_form }}
+                                <input type="submit" value="Send" class="comment-btn">
+                            </form>
+                        </div>
+                        {% for comment in comments_paginated %} 
+                        <div class="post-comment-card-wrap">
+                            <img src="{{ comment.user.profile.picture.url }}" class="rounded-circle" alt="Profile Picture">
+                            <div class="post-comment-card">
+                                <div class="post-comment-user">
+                                    <span>
+                                        <a href="{% url 'profile' comment.user.id %}">{{ comment.user }}</a>
+                                        <span id="index-post-date"> - {{ comment.date_posted }}</span>
+                                    </span>
+                                    <div class="post-dropdown-container">
+                                        {% if request.user == comment.user %}
+                                        <div class="post-dropdown-content-delete">
+                                            <form action="{% url 'post' post_obj.id %}" method="POST">
+                                                {% csrf_token %} 
+                                                <button class="edit-btn" name="delete-comment" value="Delete"><i style="margin-right: 5px;" class="bi bi-trash-fill"></i></button>
+                                                <input type="hidden" name="delete_comment_id" value="{{ comment.id }}">
+                                            </form>
+                                        </div>
+                                        {% endif %}
+                                        {% if request.user != comment.user %}
+                                        <span class="post-dropdown">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </span>
+                                        <div class="post-dropdown-content">
+                                            <div>
+                                                <form action="{% url 'post' post_obj.id %}" method="POST">
+                                                    {% csrf_token %} 
+                                                        <input type="hidden" name="post-comment-follow-id" value="{{ comment.user.id }}">
+                                                    {% if comment.user in request.user.followings.all %} 
+                                                        <button class="index-unfollow-btn" name="post-comment-unfollow" value="Unfollow" type="submit"><i style="margin-right: 5px;"  class="bi bi-person-x-fill"></i> Unfollow</button>
+                                                    {% else %}
+                                                        <button class="index-follow-btn" name="post-comment-follow" value="Follow" type="submit"><i style="margin-right: 5px;"  class="bi bi-person-plus-fill"></i> Follow</button>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="post-comment-description">
+                                    <span>{{ comment.comment }}</span>
+                                </div>
+                                <div class="index-post-interaction">
+                                    <div class="index-post-like">
+                                        <form data-id="{{ comment.id }}" class="comment-like-form" data-user_id="{{ request.user.id }}">
+                                            {% csrf_token %}
+                                            {% if request.user in comment.likes.all %} 
+                                                <button type="submit" value="Unlike" class="unlike-btn">
+                                                    <i style="color: rgb(218, 86, 108);" class="bi bi-heart-fill"></i>
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" value="Like" class="like-btn">
+                                                    <i class="bi bi-heart"></i>
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                        <span class="comment-like-count" data-id="{{ comment.id }}">{{ comment.likes.all|length }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% if comments_num > 9 %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+        
+                    <!-- If there is a previous page, Add a PREVIOUS button that goes to the previous page. And a FIRST button that goes to first page. -->
+                    {% if comments_paginated.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1"> First </a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ comments_paginated.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+            
+                    <!-- Loop through the num_of_pages which is a variable consisting the exact number of string as the number of pages there are -->
+                    <!-- **forloop.counter** gives the number of the iteration currently on which when passed to the "?page=", you will be taken to that page number -->
+                    {% for num in num_of_pages %}
+                        <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                    {% endfor %}
+        
+                    {% if comments_paginated|length == 10 %}
+                        <!-- If there is a next page, add a NEXT button that goes to the next page. And add  LAST button that goes to the last page -->
+                        {% if comments_paginated.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ comments_paginated.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ comments_paginated.paginator.num_pages }}">Last</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#">Last</a></li>
+                        {% endif %}
+                    {% endif %}
+                    
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{% static 'net/js/index.js' %}"></script>
+{% endblock %}

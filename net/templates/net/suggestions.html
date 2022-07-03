@@ -1,0 +1,39 @@
+{% extends 'net/layout.html' %} 
+{% load static %}
+{% block title %} Suggestions {% endblock %} 
+
+{% block body %} 
+    <div class="row followings-row">
+        <div class="col-lg-12">
+            <div class="followings-header">
+                <span><h3>Suggestions</h3></span>
+            </div>
+            <div class="followings-container">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                    <input type="search" class="suggestion-search" placeholder="Search for users... " aria-describedby="basic-addon1">
+                </div>
+                {% for non_following in non_followings %}
+                    <div class="suggestion-card">
+                        <div class="followings-user">
+                            <span>
+                                <a href="{% url 'profile' non_following.id %}"><img src="{{ non_following.profile.picture.url }}" alt="Profile Picture" class="rounded-circle"></a>
+                                <a href="{% url 'profile' non_following.id %}">{{ non_following }}</a>
+                            </span>
+                            <span>
+                                <form action="{% url 'suggestions' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="suggestion-id" value="{{ non_following.id }}">
+                                    <input type="submit" class="follow-btn" name="suggestion-follow" value="Follow">
+                                </form>
+                            </span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <span class="d-flex justify-content-center align-items-center"><span>There are no users to follow.</span></span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'net/js/suggestions.js' %}"></script>
+{% endblock %}
