@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2j=%6ti@q1_a7n&#-*09^br(l+c++2f-#2g3y-g)kxeko!jp&y'
+SECRET_KEY = os.environ.get('SOCIALFRONT_DJANGO_S_K')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['https://socialfront50.herokuapp.com/']
 
 
 # Application definition
