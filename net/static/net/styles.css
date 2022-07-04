@@ -1238,6 +1238,58 @@
         width: 80%;
         height: 100%;
     }
+    .index-post-card-con img {
+        height: 45px;
+        width: 45px;
+        margin-right: 10px;
+    }
+    .index-post-card-top a {
+        font-size: 15px;
+    }
+    #update-desc{
+        font-size: 15px;
+    }
+    #index-post-date {
+        font-size: 14px;
+    }
+    .index-post-card {
+        padding: 10px;
+        margin-bottom: 30px;
+    }
+    .index-post-card:last-child {
+        margin-bottom: 70px;
+    }
+    .post-comment-form img {
+        height: 50px;
+        width: 50px;
+        margin-right: 10px;
+    }
+    .post-comment-textarea {
+        font-size: 15px;
+    }
+    .comment-btn {
+        padding: 5px 15px;
+        margin-right: 10px;
+    }
+    .post-comment-card-wrap img {
+        height: 45px;
+        width: 45px;
+    }
+    .post-comment-user a {
+        font-size: 15px;
+    }
+    .post-comment-card {
+        padding: 0;
+    }
+    .index-dropdown div {
+        height: 4px;
+        width: 4px;
+        margin: 1.5px;
+    }
+    .edit-btn {
+        font-size: 15px;
+    }
+
 }
 @media only screen and (max-width: 500px){ 
     .login-wrapper {
