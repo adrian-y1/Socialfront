@@ -25,9 +25,9 @@ SECRET_KEY = os.environ.get('SOCIALFRONT_DJANGO_S_K')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
-ALLOWED_HOSTS = ['https://socialfront50.herokuapp.com/', 'localhost']
+ALLOWED_HOSTS = ['web-production-1fd4.up.railway.app', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = ['https://socialfront50.herokuapp.com/*',]
+CSRF_TRUSTED_ORIGINS = ['web-production-1fd4.up.railway.app',]
 # Application definition
 
 INSTALLED_APPS = [
