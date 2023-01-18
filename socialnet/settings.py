@@ -27,7 +27,6 @@ DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = ['web-production-1fd4.up.railway.app', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = ['web-production-1fd4.up.railway.app',]
 # Application definition
 
 INSTALLED_APPS = [
