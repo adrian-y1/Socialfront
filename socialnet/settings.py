@@ -27,9 +27,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', os.environ.get('SOCIALFRONT_DJANGO_S_K
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
-ALLOWED_HOSTS = ['web-production-1fd4.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['socialfront.up.railway.app', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-1fd4.up.railway.app/*',]
+CSRF_TRUSTED_ORIGINS = ['https://socialfront.up.railway.app/*',]
 
 # Application definition
 
