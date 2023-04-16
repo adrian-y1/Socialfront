@@ -8,6 +8,8 @@ SocialFront is a robust and feature-rich social networking application that has 
 
 The app has been crafted with user experience and interface design in mind, ensuring that it is both intuitive and easy to use. The user interface is sleek and responsive, allowing users to effortlessly navigate through the app and quickly find the features they need.
 
+This application was initially developed as a project for the "[CS50's Web Programming with Python and JavaScript course](https://cs50.harvard.edu/web/2020/)" course offered by Harvard University. Since then, it has undergone several enhancements and modifications to incorporate a wider range of features.
+
 ## Features
 
 - User registration and login
@@ -31,7 +33,7 @@ One particular issue that I faced was with the edit function. After updating a p
 
 As I was relatively new to AJAX calls, I faced several difficulties during the development of this app. To gain a better understanding of the topic, I used a range of online resources to start from the basics and gradually move towards more advanced concepts that i was working on. This allowed me to ensure that I fully comprehended every aspect of the process, and that I was not overlooking any crucial details.
 
-In addition, I sought assistance from various Discord communities such as CS50 and Programmer's Hangout. This enabled me to receive feedback and suggestions on the issues I was facing, as well as the direction I was taking.
+In addition, I sought assistance from various Discord communities such as [CS50 discord](https://discord.gg/cs50) and [Programmer's Hangout discord](https://discord.gg/programming). This enabled me to receive feedback and suggestions on the issues I was facing, as well as the direction I was taking.
 
 To overcome the issues i faced with the edit function's update post feature, I dug deep into my code and thoroughly debugged it, breaking down the problem to its root cause. I also utilized console.log statements to identify the source of the issue and determine the best approach to tackle it.
 
