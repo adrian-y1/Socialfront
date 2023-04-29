@@ -35,7 +35,7 @@ As I was relatively new to AJAX calls, I faced several difficulties during the d
 
 In addition, I sought assistance from various Discord communities such as [CS50 discord](https://discord.gg/cs50) and [Programmer's Hangout discord](https://discord.gg/programming). This enabled me to receive feedback and suggestions on the issues I was facing, as well as the direction I was taking.
 
-To overcome the issues i faced with the edit function's update post feature, I dug deep into my code and thoroughly debugged it, breaking down the problem to its root cause. I also utilized console.log statements to identify the source of the issue and determine the best approach to tackle it.
+To overcome the issues i faced with the edit function's update post feature, I dug deep into my code and thoroughly debugged it, breaking down the problem to its root cause. I also utilized `console.log()` statements to identify the source of the issue and determine the best approach to tackle it.
 
 ## Conclusion
 
